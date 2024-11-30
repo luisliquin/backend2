@@ -1,0 +1,64 @@
+<body>
+<h1>Listado de Productos</h1>
+
+<div class="search-filters">
+    <form action="/products" method="GET" id="search-form">
+        <input type="text" name="query" placeholder="Buscar producto...">
+        <select name="availability">
+            <option value="true">Disponible</option>
+            <option value="false">No Disponible</option>
+        </select>
+        <button type="submit">Buscar</button>
+    </form>
+
+    <div class="sorting">
+        <a href="?sort=price&order=asc">Precio Ascendente</a>
+        <a href="?sort=price&order=desc">Precio Descendente</a>
+    </div>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>Nombre</th>
+        <th>Estado</th>
+        <th>Descripción</th>
+        <th>Precio</th>
+        <th>Imágenes</th>
+        <th>Código</th>
+        <th>Cantidad</th>
+        <th>Categoría</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each productList}}
+        <tr>
+            <td>{{this.title}}</td>
+            <td>{{#if status}} Activo {{else}} Inactivo {{/if}}</td>
+            <td>{{this.description}}</td>
+            <td>{{this.price}}</td>
+            <td>
+                {{#if this.thumbnails.length}}
+                    <img src="{{this.thumbnails.[0]}}" alt="Imagen del producto">
+                {{else}}
+                    Sin imagen
+                {{/if}}
+            </td>
+            <td>{{this.code}}</td>
+            <td>{{this.stock}}</td>
+            <td>{{this.category}}</td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>
+<div class="pagination">
+    {{#if pagination.hasPrevPage}}
+        <a href="?page={{pagination.prevPage}}">&laquo; Anterior</a>
+    {{/if}}
+    {{#if pagination.hasNextPage}}
+        <a href="?page={{pagination.nextPage}}">Siguiente &raquo;</a>
+    {{/if}}
+</div>
+</body>
+
+<script src="/socket.io/socket.io.js"></script>

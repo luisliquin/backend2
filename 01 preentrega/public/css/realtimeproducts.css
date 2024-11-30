@@ -1,0 +1,45 @@
+html {
+    background-color: black;
+    color: white;
+}
+
+form {
+    width: 50%; 
+    margin: 0 auto; 
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px; 
+}
+
+input, button {
+    width: 100%; 
+    box-sizing: border-box; 
+    margin-top: 5px; 
+    margin-bottom: 10px; 
+}
+
+label {
+    margin-bottom: 5px; 
+}
+
+button {
+    background-color: #f06; 
+    color: white; 
+    border: none; 
+    padding: 10px; 
+    cursor: pointer; 
+    margin-top: 20px; 
+}
+
+button:hover {
+    background-color: #d05; 
+}
+
+@media (max-width: 768px) {
+    form {
+        width: 90%; 
+    }
+}

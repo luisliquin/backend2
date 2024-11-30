@@ -1,0 +1,31 @@
+<h1>Agregar Productos</h1>
+<form action="/tu-endpoint-de-productos" method="POST" enctype="multipart/form-data">
+    <div class="input-group">
+        <label for="name">Nombre del Producto</label>
+        <input type="text" id="name" name="title" required placeholder="Introduce el nombre del producto">
+    </div>
+    <div class="input-group">
+        <label for="description">Descripción del producto</label>
+        <input type="text" id="description" name="description" required placeholder="Describe el producto">
+    </div>
+    <div class="input-group">
+        <label for="price">Precio</label>
+        <input type="number" id="price" name="price" required placeholder="Precio del producto">
+    </div>
+    <div class="input-group">
+        <label for="image">Cargar una imagen</label>
+        <input type="file" id="image" name="thumbnail">
+    </div>
+    <div class="input-group">
+        <label for="code">Código</label>
+        <input type="text" id="code" name="code" required placeholder="Código del producto">
+    </div>
+    <div class="input-group">
+        <label for="stock">Cantidad</label>
+        <input type="number" id="stock" name="stock" required placeholder="Cantidad disponible">
+    </div>
+    <button type="submit">Agregar Producto</button>
+</form>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script>

@@ -20,6 +20,7 @@ app.use(express.json());
 setupHandlebars(app);
 setupRoutes(app);
 connectToDatabase();
+initializatePassport();
 
 const server = app.listen(port, () => {
     console.log(`Servidor corriendo en http://localhost:${port}`);

@@ -1,5 +1,16 @@
 <body>
+
 <h1>Listado de Productos</h1>
+
+{{#if user}}
+<div class="welcome-message">
+    Bienvenido, {{user.first_name}} {{user.last_name}}! Rol: {{user.role}}
+</div>
+{{else}}
+<div class="welcome-message">
+    Bienvenido, visitante!
+</div>
+{{/if}}
 
 <div class="search-filters">
     <form action="/products" method="GET" id="search-form">
@@ -60,5 +71,9 @@
     {{/if}}
 </div>
 </body>
+
+<form action="/api/sessions/logout" method="GET">
+    <button type="submit">Logout</button>
+</form>
 
 <script src="/socket.io/socket.io.js"></script>

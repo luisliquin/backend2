@@ -29,9 +29,6 @@ const server = app.listen(port, () => {
 
 setupSockets(server);
 
-app.use(notFoundHandler);
-app.use(errorHandler);
-
 const messagesManagerService = new MessageManagerDB()
 
 app.get('/chat', async (req, res) => {
@@ -40,3 +37,6 @@ app.get('/chat', async (req, res) => {
         style: 'index.css', layout: 'main', chat: chat
     })
 })
+
+app.use(notFoundHandler);
+app.use(errorHandler);

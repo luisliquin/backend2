@@ -7,6 +7,7 @@ import connectToDatabase from "./config/database.js";
 import {notFoundHandler, errorHandler} from "./config/errorHandlers.js";
 import {config} from "dotenv";
 import {MessageManagerDB} from "./dao/MessageManagerDB.js";
+import initializatePassport from "./config/passport.js";
 
 config();
 

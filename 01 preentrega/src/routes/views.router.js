@@ -1,5 +1,6 @@
 import {Router} from "express";
 import {ProductManagerDB} from "../dao/ProductManagerDB.js";
+import passport from "passport";
 
 const router = Router();
 const products = new ProductManagerDB();
@@ -48,5 +49,18 @@ router.get("/chat", async (req, res) => {
         title: "Chat con vendedor", style: "chat.css"
     })
 })
+
+router.get("/register", (req, res) => {
+    res.render('register', {
+        title: 'Register', 
+        style: 'custom.css'
+    })
+});
+
+router.get("/callback", passport.authenticate ("github",  {
+    failureRedirect: "/login",
+    successRedirect: "/home",
+    passReqToCallback: true
+}));
 
 export default router;

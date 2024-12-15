@@ -58,23 +58,10 @@ passport.use(
 
 const cookieExtractor = (req) => {
   let token = null;
-  if (req && req.cookies) {
+  if (req?.cookies) {
     token = req.cookies['token'];
   }
   return token;
-};
-
-const verifyToken = async (jwt_payload, done) => {
-  try {
-    const user = await UserModel.findById(jwt_payload.sub);
-    if (user) {
-      return done(null, user);
-    } else {
-      return done(null, false);
-    }
-  } catch (err) {
-    return done(err, false);
-  }
 };
 
 const strategyOptionsCookies = {

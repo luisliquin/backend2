@@ -12,7 +12,6 @@ import '../config/passport.js';
 
 const setupRoutes = (app) => {
     const uri = process.env.MONGO_CONNECT;
-    const sessionSecret = process.env.JWT_SECRET; 
     
     const options = {dbName: "ecommerce"};
     mongoose.connect(uri, options);

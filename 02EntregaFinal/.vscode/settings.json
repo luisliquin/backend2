@@ -1,0 +1,6 @@
+{
+    "sonarlint.connectedMode.project": {
+        "connectionId": "luisliquin",
+        "projectKey": "luisliquin_backend2"
+    }
+}

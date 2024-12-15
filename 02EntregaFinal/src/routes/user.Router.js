@@ -7,7 +7,7 @@ import {createHash, isValidPassword} from '../utils/functionsUtils.js';
 const userRouter = Router();
 
 const generateToken = (user) => {
-    return jwt.sign({ sub: user._id }, "12b0086d09825e1bf3b8ee6d386c80f576494b52", { expiresIn: '1h' });
+    return jwt.sign({ sub: user._id }, process.env.CLIENT_SECRET, { expiresIn: '1h' });
 };
 
 userRouter.post("/register", async (req, res) => {

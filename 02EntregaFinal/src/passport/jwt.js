@@ -9,7 +9,7 @@ const cookieExtractor = (req) => {
 
 const strategyOptionsCookies = {
   jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
-  secretOrKey: "1234",
+  secretOrKey: process.env.JWT_SECRET,
 };
 
 passport.use(

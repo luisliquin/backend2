@@ -111,6 +111,7 @@ export const purchaseCart = async (req, res) => {
         res.status(200).json({
             status: "success",
             ticket,
+            processedProducts,
             failedProducts,
         });
     } catch (error) {

@@ -3,6 +3,7 @@ import UserService from '../services/user.service.js';
 export const registerUser = async (req, res) => {
     try {
         const user = await UserService.registerUser(req.body);
+        console.log(`Usuario registrado: ${user.email}`); 
         res.redirect("/login");
     } catch (error) {
         console.error(error.message);

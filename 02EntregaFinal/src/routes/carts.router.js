@@ -2,7 +2,7 @@ import { Router } from "express";
 import {
     getAllCarts,
     getCartById,
-    addCart,
+    createCart,
     addProductToCart,
     deleteProductInCart,
     updateCart,
@@ -14,7 +14,7 @@ const cartsRouter = Router();
 
 cartsRouter.get("/", getAllCarts);
 cartsRouter.get("/:cid", getCartById);
-cartsRouter.post("/", addCart);
+cartsRouter.post("/", createCart);
 cartsRouter.post("/:cid/product/:pid", addProductToCart);
 cartsRouter.delete("/:cid/product/:pid", deleteProductInCart);
 cartsRouter.put("/:cid", updateCart);

@@ -22,7 +22,7 @@ router.get("/login", async (req, res) => {
 
 router.get("/home", async (req, res) => {
     try {
-        const productList = await products.getProducts();
+        const productList = await products.getAll();
         res.render("home", {
             title: "Home",
             style: "home.css",
@@ -35,7 +35,7 @@ router.get("/home", async (req, res) => {
 
 router.get("/realtimeproducts", async (req, res) => {
     try {
-        const productList = await products.getProducts();
+        const productList = await products.getAll();
         res.render("realtimeproducts", {
             title: "Real Time Products", style: "realtimeproducts.css", productList
         });

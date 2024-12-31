@@ -1,7 +1,7 @@
-import UserRepository from '../repositories/UserRepository.js';
+import UserRepository from '../repository/user.repository.js';
 import { createHash, isValidPassword } from '../utils/functionsUtils.js';
 import jwt from 'jsonwebtoken';
-import UserDTO from '../dto/UserDTO.js';
+import UserDTO from '../dto/user.dto.js';
 
 class UserService {
     async registerUser(data) {

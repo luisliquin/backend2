@@ -1,4 +1,5 @@
 import CartService from "../services/cart.service.js";
+import TicketService from "../services/ticket.service.js";
 
 export const getAllCarts = async (req, res) => {
     try {
@@ -90,5 +91,29 @@ export const updateProductQuantity = async (req, res) => {
             status: "error",
             message: error.message,
         });
+    }
+};
+
+export const purchaseCart = async (req, res) => {
+    try {
+        const { cid } = req.params;
+
+        const cart = await CartService.getCartById(cid);
+
+        const { processedProducts, failedProducts, totalAmount } = await CartService.processPurchase(cart);
+
+        const ticket = await TicketService.createTicket({
+            code: `TICKET-${Date.now()}`,
+            amount: totalAmount,
+            purchaser: req.user.email, 
+        });
+
+        res.status(200).json({
+            status: "success",
+            ticket,
+            failedProducts,
+        });
+    } catch (error) {
+        res.status(500).send({ error: error.message });
     }
 };

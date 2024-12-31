@@ -43,6 +43,42 @@ class CartService {
         if (!updatedCart) throw new Error("Carrito no encontrado o producto no existe en el carrito");
         return new CartDTO(updatedCart);
     }
+
+    async processPurchase(cart) {
+        const processedProducts = [];
+        const failedProducts = [];
+        let totalAmount = 0;
+
+        for (const item of cart.products) {
+            const product = await ProductService.getProductById(item.product._id);
+
+            if (product.stock >= item.quantity) {
+                await ProductService.updateProductStock(product._id, product.stock - item.quantity);
+
+                processedProducts.push({
+                    productId: product._id,
+                    name: product.name,
+                    quantity: item.quantity,
+                });
+
+                totalAmount += product.price * item.quantity;
+            } else {
+                failedProducts.push({
+                    productId: product._id,
+                    name: product.name,
+                    requested: item.quantity,
+                    available: product.stock,
+                });
+            }
+        }
+
+        await this.updateCart(cart._id, failedProducts.map(f => ({
+            product: f.productId,
+            quantity: f.requested - f.available,
+        })));
+
+        return { processedProducts, failedProducts, totalAmount };
+    }
 }
 
 export default new CartService();

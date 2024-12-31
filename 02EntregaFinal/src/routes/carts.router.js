@@ -8,6 +8,7 @@ import {
     updateCart,
     updateProductQuantity,
     clearCart,
+    purchaseCart
 } from "../controllers/cart.controller.js";
 
 const cartsRouter = Router();
@@ -20,5 +21,6 @@ cartsRouter.delete("/:cid/product/:pid", deleteProductInCart);
 cartsRouter.put("/:cid", updateCart);
 cartsRouter.put("/:cid/product/:pid", updateProductQuantity);
 cartsRouter.delete("/:cid", clearCart);
+cartsRouter.post("/:cid/purchase", purchaseCart);
 
 export default cartsRouter;

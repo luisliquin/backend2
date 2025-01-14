@@ -11,7 +11,7 @@ const setupSockets = (server) => {
     io.on("connection", async (socket) => {
         console.log("Cliente conectado: ", socket.id);
 
-        const productList = await products.getProducts();
+        const productList = await products.getAll();
         socket.emit("productList", productList);
 
         socket.on("addMessage", async messageData => {

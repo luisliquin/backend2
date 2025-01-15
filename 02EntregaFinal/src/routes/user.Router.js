@@ -17,7 +17,7 @@ router.get(
     "/current",
     passport.authenticate('jwtCookies', { session: false }),
     getCurrentUser
-); // Ruta para obtener el usuario actual
+); 
 
 router.get('/github',
      passport.authenticate('github', {scope: ['user:email']}), 

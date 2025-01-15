@@ -48,8 +48,12 @@ class CartService {
         const processedProducts = [];
         const failedProducts = [];
         let totalAmount = 0;
+        console.log('Inicio de processPurchase');
+        console.log('Carrito:', cart);
+        console.log('Productos en el carrito:', cart.products);
 
         for (const item of cart.products) {
+            console.log('Procesando producto:', item);
             const product = await ProductService.getProductById(item.product._id);
 
             if (product.stock >= item.quantity) {

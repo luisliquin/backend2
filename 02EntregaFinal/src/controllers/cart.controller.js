@@ -99,9 +99,8 @@ export const purchaseCart = async (req, res) => {
         const { cid } = req.params;
 
         const cart = await CartService.getCartById(cid);
-
         const { processedProducts, failedProducts, totalAmount } = await CartService.processPurchase(cart);
-
+        print (`${processedProducts} ${failedProducts} ${totalAmount}`)
         const ticket = await TicketService.createTicket({
             code: `TICKET-${Date.now()}`,
             amount: totalAmount,

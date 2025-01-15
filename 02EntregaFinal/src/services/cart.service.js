@@ -1,5 +1,6 @@
 import CartRepository from "../repository/cart.repository.js";
 import CartDTO from "../dto/cart.dto.js";
+import ProductService from "./product.service.js";
 
 class CartService {
     async getAllCarts() {
@@ -48,38 +49,43 @@ class CartService {
         const processedProducts = [];
         const failedProducts = [];
         let totalAmount = 0;
-        console.log('Inicio de processPurchase');
-        console.log('Carrito:', cart);
-        console.log('Productos en el carrito:', cart.products);
 
         for (const item of cart.products) {
-            console.log('Procesando producto:', item);
-            const product = await ProductService.getProductById(item.product._id);
-
-            if (product.stock >= item.quantity) {
-                await ProductService.updateProductStock(product._id, product.stock - item.quantity);
-
+            try {
+                const product = await ProductService.getProductById(item.productId);
+                await ProductService.updateProductStock(product.id, item.quantity);
                 processedProducts.push({
-                    productId: product._id,
-                    name: product.name,
+                    productId: product.id,
+                    name: product.title, 
                     quantity: item.quantity,
                 });
 
                 totalAmount += product.price * item.quantity;
-            } else {
+            } catch (error) {
+                console.error(`Error al procesar el producto con ID ${item.productId}: ${error.message}`);
+
+                let availableStock = 0;
+                try {
+                    const product = await ProductService.getProductById(item.productId);
+                    availableStock = product.stock;
+                } catch (err) {
+                }
+
                 failedProducts.push({
-                    productId: product._id,
-                    name: product.name,
+                    productId: item.productId,
+                    name: item.name || "Producto desconocido", 
                     requested: item.quantity,
-                    available: product.stock,
+                    available: availableStock,
                 });
             }
         }
 
-        await this.updateCart(cart._id, failedProducts.map(f => ({
-            product: f.productId,
-            quantity: f.requested - f.available,
-        })));
+        if (failedProducts.length > 0) {
+            await this.updateCart(cart._id, failedProducts.map(f => ({
+                product: f.productId,
+                quantity: f.requested - (f.available || 0),
+            })));
+        }
 
         return { processedProducts, failedProducts, totalAmount };
     }

@@ -30,6 +30,15 @@ export class ProductManagerDB {
     async paginate(filter, options) {
         return await productModel.paginate(filter, options);
     }
+
+    async updateProductStock(id, quantity) {
+        const updatedProduct = await productModel.findOneAndUpdate(
+            { _id: id, stock: { $gte: stock } },
+            {$inc: { stock: - quantity }},
+            { new: true }
+        );
+        return updatedProduct;
+    }
 }
 
 export default new ProductManagerDB();

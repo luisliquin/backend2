@@ -24,6 +24,10 @@ class ProductRepository {
     async paginateProducts(filter, options) {
         return await ProductManagerDB.paginate(filter, options);
     }
+
+    async updateProductStock(id, quantity) {
+        return await ProductManagerDB.updateProductStock(id, quantity);
+    }
 }
 
 export default new ProductRepository();

@@ -18,8 +18,8 @@ class ProductService {
         return paginatedProducts;
     }
 
-    async getProductById(id) {
-        const product = await ProductRepository.getProductById(id);
+    async getProductById(id) {    
+        const product = await ProductRepository.getProductById(id);        
         return new ProductDTO(product);
     }
 
@@ -30,11 +30,26 @@ class ProductService {
 
     async updateProduct(id, productUpdate) {
         const updatedProduct = await ProductRepository.updateProduct(id, productUpdate);
+        
+        if (!updatedProduct) {
+            throw new NotFoundError(`El producto con ID ${id} no existe.`);
+        }
+
         return new ProductDTO(updatedProduct);
     }
 
     async deleteProduct(id) {
         return await ProductRepository.deleteProduct(id);
+    }
+
+    async updateProductStock(id, quantity) {
+        const updatedProduct = await ProductRepository.updateProductStock(id, quantity);
+        
+        if (!updatedProduct) {
+            throw new BadRequestError(`No hay suficiente stock para el producto con ID ${id}.`);
+        }
+
+        return new ProductDTO(updatedProduct);
     }
 }
 

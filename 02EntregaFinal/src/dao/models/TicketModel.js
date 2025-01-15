@@ -1,20 +1,26 @@
 import mongoose from 'mongoose';
+import { v4 as uuidv4 } from 'uuid';
 
-const ticketCollection = 'tickets';
-
-const ticketSchema = mongoose.Schema({
-    code: { 
-        type: String, unique: true, required: true 
-    }, purchase_datetime: { 
-        type: Date, default: Date.now 
+const ticketSchema = new mongoose.Schema({
+    code: {
+        type: String,
+        required: true,
+        unique: true,
+        default: () => uuidv4(), 
     },
-    amount: { 
-        type: Number, required: true 
-    }, purchaser: { 
-        type: String, required: true 
+    purchase_datetime: {
+        type: Date,
+        default: Date.now,
     },
-});
+    amount: {
+        type: Number,
+        required: true,
+    },
+    purchaser: {
+        type: String,
+        required: true,
+        match: [/.+@.+\..+/, 'Por favor, ingrese un correo electrónico válido.'],
+    },
+}, { timestamps: false });
 
-const TicketModel = mongoose.model(ticketCollection, ticketSchema);
-
-export default TicketModel;
+export default mongoose.model('Ticket', ticketSchema);

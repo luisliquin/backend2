@@ -1,6 +1,7 @@
 import CartRepository from "../repository/cart.repository.js";
 import CartDTO from "../dto/cart.dto.js";
 import ProductService from "./product.service.js";
+import TicketService from "./ticket.service.js";
 
 class CartService {
     async getAllCarts() {
@@ -44,7 +45,7 @@ class CartService {
         if (!updatedCart) throw new Error("Carrito no encontrado o producto no existe en el carrito");
         return new CartDTO(updatedCart);
     }
-
+  
     async processPurchase(cart) {
         const processedProducts = [];
         const failedProducts = [];
@@ -53,7 +54,13 @@ class CartService {
         for (const item of cart.products) {
             try {
                 const product = await ProductService.getProductById(item.productId);
+                
+                if (!product) {
+                    throw new Error("Producto no encontrado");
+                }
+
                 await ProductService.updateProductStock(product.id, item.quantity);
+ 
                 processedProducts.push({
                     productId: product.id,
                     name: product.title, 
@@ -67,7 +74,9 @@ class CartService {
                 let availableStock = 0;
                 try {
                     const product = await ProductService.getProductById(item.productId);
-                    availableStock = product.stock;
+                    if (product) {
+                        availableStock = product.stock;
+                    }
                 } catch (err) {
                 }
 
@@ -85,9 +94,20 @@ class CartService {
                 product: f.productId,
                 quantity: f.requested - (f.available || 0),
             })));
+        }else{
+            await this.clearCart(cart._id);
         }
 
-        return { processedProducts, failedProducts, totalAmount };
+        let ticket = null;
+        if (processedProducts.length > 0) {
+            try {
+                ticket = await TicketService.createTicket(totalAmount);
+            } catch (ticketError) {
+                console.error('Error al crear el ticket:', ticketError.message);         
+            }
+        }
+
+        return { processedProducts, failedProducts, totalAmount, ticket };
     }
 }
 

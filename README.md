@@ -1,11 +1,22 @@
-# Desafíos de Node.js - CoderHouse
+# Backend II · Node.js (CoderHouse)
 
-Este repositorio contiene todos los desafíos y trabajos prácticos realizados por mí como parte del curso de Node.js en CoderHouse. El propósito de este repositorio es documentar mi progreso y aprendizaje a lo largo del curso, así como compartir soluciones y obtener feedback.
+Entrega final del curso **Programación Backend II** de CoderHouse: el e-commerce de Backend I con autenticación, autorización y una arquitectura en capas.
 
-## Acerca del Curso
+## Qué incluye
 
-El curso de Node.js en CoderHouse está diseñado para enseñar a los estudiantes cómo construir aplicaciones del lado del servidor utilizando Node.js. A través de este curso, estoy adquiriendo habilidades fundamentales para el desarrollo backend.
+- **Autenticación:** Passport (local, JWT y GitHub), sesiones y cookies, contraseñas con bcrypt.
+- **Arquitectura en capas:** controllers, services, DAO, DTO y repository.
+- **Compras:** carritos y generación de tickets.
+- **Tiempo real:** chat y listado de productos con Socket.io.
 
-## Estructura del Repositorio
+**Tecnologías:** Node.js · Express · MongoDB · Mongoose · Passport · JWT · Handlebars · Socket.io
 
-Cada carpeta dentro de este repositorio representa un desafío específico asignado durante el curso. Dentro de cada carpeta, encontrarás el código fuente junto con un archivo `README.md` que describe el desafío, cómo ejecutar el código, y cualquier nota relevante que considere importante compartir.
+## Cómo ejecutar
+
+```bash
+cd 02EntregaFinal
+npm install
+npm start
+```
+
+Necesita un archivo `.env` con la conexión a MongoDB, el secreto de JWT y las credenciales de OAuth de GitHub. El `Readme.md` de la carpeta detalla la consigna.
